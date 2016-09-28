@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculator</title>
+</head>
+<body>
+	<div id="main">
+		<table>
+			<tr><td id="produce" colspan="5">Produce by TrieuNv</td></tr>
+			<tr id="tr1"><td id="td1" colspan="5">0123456789</td></tr>
+			<tr>
+
+				<td>MC</td>
+				<td>M+</td>
+				<td>M-</td>
+				<td>MR</td>
+				<td>C</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>8</td>
+				<td>8</td>
+				<td>%</td>
+				<td>-></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+				<td>x</td>
+				<td>/</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>2</td>
+				<td>3</td>
+				<td>+</td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<td>0</td>
+				<td>.</td>
+				<td>Ans</td>
+				<td>Sqrt</td>
+				<td style="background-color: #f6c">=</td>
+			</tr>
+
+		</table>
+	</div>
+</body>
+	<style type="text/css">
+		div#main{
+			width: 1000px;
+			min-height: 500px;
+			margin: auto;
+			border: 1px dotted #444;
+			padding: 50px;
+		}
+		table{
+			margin: auto;
+			border-radius: 10px;
+			box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 1);
+			border-spacing: 10px;
+			border: 1px solid #000;
+		}
+		tr#tr1{
+			height: 75px;
+			border-radius: 5px;
+		}
+		td#td1{
+			border: 0.1px solid #aaa;
+			background-color: #cf6;
+			text-align: right;
+			color: #fff;
+			font-size: 28px;
+			font-weight: bold;
+		}
+		td{
+			width: 40px;
+			height: 40px;
+			border: 1px solid #444;
+			border-radius: 2px;
+			text-align: center;
+			box-shadow: -2px 2px 5px #444;
+			background-color: #aaa;
+			color: #fff;
+		}
+		td:active{
+			box-shadow: none;
+		}
+		td#produce{
+			height: 10px;
+			background-color: #fff;
+			color: #000;
+			text-align: right;
+			font-style: italic;
+			font-size: 10px;
+			box-shadow: none;
+			border: 0.1px dotted #eee;
+		}
+	</style>
+</html>
