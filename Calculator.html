@@ -3,13 +3,13 @@
 <head>
 	<title>Calculator</title>
 </head>
+
 <body>
 	<div id="main">
 		<table>
 			<tr><td id="produce" colspan="5">Produce by TrieuNv</td></tr>
-			<tr id="tr1"><td id="td1" colspan="5">0123456789</td></tr>
+			<tr id="tr1"><td id="td1" colspan="5"><div id="desktop">0000000</div></td></tr>
 			<tr>
-
 				<td>MC</td>
 				<td>M+</td>
 				<td>M-</td>
@@ -17,28 +17,28 @@
 				<td>C</td>
 			</tr>
 			<tr>
-				<td>7</td>
-				<td>8</td>
-				<td>8</td>
+				<td onclick="showNumber(7)">7</td>
+				<td onclick="showNumber(8)">8</td>
+				<td onclick="showNumber(9)">9</td>
 				<td>%</td>
 				<td>-></td>
 			</tr>
 			<tr>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
+				<td onclick="showNumber(4)">4</td>
+				<td onclick="showNumber(5)">5</td>
+				<td onclick="showNumber(6)">6</td>
 				<td>x</td>
 				<td>/</td>
 			</tr>
 			<tr>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
+				<td onclick="showNumber(1)">1</td>
+				<td onclick="showNumber(2)">2</td>
+				<td onclick="showNumber(3)">3</td>
 				<td>+</td>
 				<td>-</td>
 			</tr>
 			<tr>
-				<td>0</td>
+				<td onclick="showNumber(0)">0</td>
 				<td>.</td>
 				<td>Ans</td>
 				<td>Sqrt</td>
@@ -47,6 +47,91 @@
 
 		</table>
 	</div>
+	<script type="text/javascript">
+		var operation = 0;  // 1 = +, 2 = -, 3 = *, 4 = /, 5 = %.
+		var operand = 0; // number was be store
+		var Mr = 0;
+		var Ans = 0;
+		var desktop = document.getElementById("desktop");
+
+		var show = "0";
+		function showNumber(key){
+			if (key == 0 && show === 0) {
+				return;
+			}
+			show += key;
+			desktop.innerHTML = Number(show);
+		}
+
+/*		function sqrt(number){
+			if(number >= 0){
+				var result = Math.Sqrt(number);
+				desktop.innerHTML = result;
+				Ans = result;
+			}else{
+				desktop.innerHTML = "Math error";
+			}
+		}*/
+		function ans(){
+			desktop.innerHTML = Ans;
+		}
+		function result(number){
+
+			switch (operation){
+				case 0:
+					Ans = operand;
+					desktop.innerHTML = Ans;
+				case 1:
+					Ans = operand + Number(number);
+					desktop.innerHTML = Ans;
+				break;
+
+				case 2:
+					Ans = operand - number;
+					desktop.innerHTML = Ans;
+				break;
+
+				case 3:
+					Ans = operand * number;
+					desktop.innerHTML = Ans;
+				break;
+
+				case 4:
+					if (number == 0) {
+						desktop.innerHTML = "Math error";
+					}else{
+						Ans = operand / number;
+						desktop.innerHTML = Ans;
+					}
+				break;
+
+/*				case 5:
+					desktop.innerHTML = operand * 100;
+				break;*/
+
+				default:
+				break;
+			}
+			operation = 0;
+		}
+		function mSum(number){
+			Mr+= number;
+		}
+		function mSub(number){
+			Mr-= number;
+		}
+		function mr(){
+			desktop.innerHTML = Mr;
+		}
+		function mc(){
+			mr = 0;
+		}
+		function cancel(){
+			Ans = 0;
+			operation = 0;
+			operand = 0;
+		}
+	</script>
 </body>
 	<style type="text/css">
 		div#main{
@@ -75,11 +160,12 @@
 			font-size: 28px;
 			font-weight: bold;
 		}
+
 		td{
 			width: 40px;
 			height: 40px;
 			border: 1px solid #444;
-			border-radius: 2px;
+			border-radius: 4px;
 			text-align: center;
 			box-shadow: -2px 2px 5px #444;
 			background-color: #aaa;
@@ -98,5 +184,6 @@
 			box-shadow: none;
 			border: 0.1px dotted #eee;
 		}
+
 	</style>
 </html>
