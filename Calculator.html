@@ -8,129 +8,199 @@
 	<div id="main">
 		<table>
 			<tr><td id="produce" colspan="5">Produce by TrieuNv</td></tr>
-			<tr id="tr1"><td id="td1" colspan="5"><div id="desktop">0000000</div></td></tr>
+			<tr id="tr1"><td id="td1" colspan="5"><div id="desktop">0</div></td></tr>
 			<tr>
-				<td>MC</td>
-				<td>M+</td>
-				<td>M-</td>
-				<td>MR</td>
-				<td>C</td>
+				<td onclick="mc()">MC</td>
+				<td onclick="mSum()">M+</td>
+				<td onclick="mSub()">M-</td>
+				<td onclick="mr()">MR</td>
+				<td onclick="cancel()">C</td>
 			</tr>
 			<tr>
-				<td onclick="showNumber(7)">7</td>
-				<td onclick="showNumber(8)">8</td>
-				<td onclick="showNumber(9)">9</td>
-				<td>%</td>
-				<td>-></td>
+				<td onclick="inputNumber(7)">7</td>
+				<td onclick="inputNumber(8)">8</td>
+				<td onclick="inputNumber(9)">9</td>
+				<td onclick="percen()">%</td>
+				<td onclick="cl()">-></td>
 			</tr>
 			<tr>
-				<td onclick="showNumber(4)">4</td>
-				<td onclick="showNumber(5)">5</td>
-				<td onclick="showNumber(6)">6</td>
-				<td>x</td>
-				<td>/</td>
+				<td onclick="inputNumber(4)">4</td>
+				<td onclick="inputNumber(5)">5</td>
+				<td onclick="inputNumber(6)">6</td>
+				<td onclick="result(3)">x</td>
+				<td onclick="result(4)">/</td>
 			</tr>
 			<tr>
-				<td onclick="showNumber(1)">1</td>
-				<td onclick="showNumber(2)">2</td>
-				<td onclick="showNumber(3)">3</td>
-				<td>+</td>
-				<td>-</td>
+				<td onclick="inputNumber(1)">1</td>
+				<td onclick="inputNumber(2)">2</td>
+				<td onclick="inputNumber(3)">3</td>
+				<td onclick="result(1)">+</td>
+				<td onclick="result(2)">-</td>
 			</tr>
 			<tr>
-				<td onclick="showNumber(0)">0</td>
-				<td>.</td>
-				<td>Ans</td>
-				<td>Sqrt</td>
-				<td style="background-color: #f6c">=</td>
+				<td onclick="inputNumber(0)">0</td>
+				<td onclick="inputNumber('.')">.</td>
+				<td onclick="Ans()">Ans</td>
+				<td onclick="Sqrt()">Sqrt</td>
+				<td style="background-color: #f6c" onclick="equal()">=</td>
 			</tr>
 
 		</table>
 	</div>
-	<script type="text/javascript">
-		var operation = 0;  // 1 = +, 2 = -, 3 = *, 4 = /, 5 = %.
-		var operand = 0; // number was be store
-		var Mr = 0;
-		var Ans = 0;
-		var desktop = document.getElementById("desktop");
 
+	<script type="text/javascript">
+
+		var desktop = document.getElementById("desktop");
+		var firstOperation = 0; // 1 = +, 2 = -, 3 = x, 4 = /, 5 = %;
+		var secondOperation = 0;
+		var mRemember = 0;
+		var ans = 0;
+		var operand1 = 0; // gia tri phep tinh lien trc
+		var operand2 = 0;
+		var numberInput = 0;
 		var show = "0";
-		function showNumber(key){
+
+		function inputNumber(key){
 			if (key == 0 && show === 0) {
 				return;
 			}
-			show += key;
-			desktop.innerHTML = Number(show);
-		}
 
-/*		function sqrt(number){
-			if(number >= 0){
-				var result = Math.Sqrt(number);
-				desktop.innerHTML = result;
-				Ans = result;
+			if (key == ".") {
+				if(show.search(/\./) > -1){ // chu y : "." = /\./
+					return;
+					}else{
+						show += '.';
+						desktop.innerHTML = show;
+					}
+			}else if (show === "0"){
+				show = "";
+				show += key;
+				desktop.innerHTML = show;
 			}else{
-				desktop.innerHTML = "Math error";
+				show += key;
+				desktop.innerHTML = show;
 			}
-		}*/
-		function ans(){
-			desktop.innerHTML = Ans;
-		}
-		function result(number){
 
-			switch (operation){
+				numberInput = Number(show);
+		}
+
+		function Ans(){
+			show = "0";
+			inputNumber(ans);
+		}
+		function Sqrt(){
+			show = "0";
+			if (numberInput < 0) {
+				exception();
+				return;
+			}
+			inputNumber(Math.sqrt(numberInput));
+		}
+
+
+		function result(operation){
+			operand2 = numberInput;
+			
+			switch (firstOperation){
+
 				case 0:
-					Ans = operand;
-					desktop.innerHTML = Ans;
+					operand1 = operand2;
+					show = "0";
+					inputNumber(operand1);
+					show = "0";
+					break;
 				case 1:
-					Ans = operand + Number(number);
-					desktop.innerHTML = Ans;
+					operand1 += operand2;
+					show = "0";
+					inputNumber(operand1);
+					show = "0";
 				break;
 
 				case 2:
-					Ans = operand - number;
-					desktop.innerHTML = Ans;
+					operand1 -= operand2;
+					show = "0";
+					inputNumber(operand1);
+					show = "0";
 				break;
 
 				case 3:
-					Ans = operand * number;
-					desktop.innerHTML = Ans;
+					operand1 *= operand2;
+					show = "0";
+					inputNumber(operand1);
+					show = "0";
 				break;
 
 				case 4:
-					if (number == 0) {
-						desktop.innerHTML = "Math error";
+					if (operand2 == 0) {
+						exception();
 					}else{
-						Ans = operand / number;
-						desktop.innerHTML = Ans;
+						operand1 /= operand2;
+						show = "0";
+						inputNumber(operand1);
+						show = "0";
 					}
 				break;
 
-/*				case 5:
-					desktop.innerHTML = operand * 100;
-				break;*/
-
 				default:
+					desktop.innerHTML = "error case default";
 				break;
 			}
-			operation = 0;
+			firstOperation = operation;
+
 		}
-		function mSum(number){
-			Mr+= number;
+		function equal(){
+			result(0);
+			ans = operand1;
+			//cancel();
 		}
-		function mSub(number){
-			Mr-= number;
+
+		function percen(){
+			show = "0";
+			inputNumber(numberInput * 100);
 		}
-		function mr(){
-			desktop.innerHTML = Mr;
+
+		function cl(){
+			
+			if (show.length == 0 || show === "0") {
+				show = "0";
+				inputNumber(show);
+				return;
+			}
+
+			var number = numberInput.toString();
+			number = number.substring(0,show.length - 1);
+			show = "0";
+			inputNumber(number);
 		}
+
 		function mc(){
-			mr = 0;
+			mRemember = 0;
 		}
+		function mSub(){
+			mRemember -= numberInput;
+		}
+		function mSum(){
+			mRemember += numberInput;
+		}
+
+		function mr(){
+			show = "0";
+			inputNumber(mRemember);
+		}
+
 		function cancel(){
-			Ans = 0;
-			operation = 0;
-			operand = 0;
+			firstOperation = 0;
+			ans = 0;
+			show = "0";
+			desktop.innerHTML = "0";
+			operand1 = 0;
+			numberInput = 0;
 		}
+		function exception(){
+			cancel();
+			desktop.innerHTML = "Math error";
+		}
+
 	</script>
 </body>
 	<style type="text/css">
@@ -160,7 +230,9 @@
 			font-size: 28px;
 			font-weight: bold;
 		}
-
+		div#desktop{
+			font-family: Courier;
+		}
 		td{
 			width: 40px;
 			height: 40px;
