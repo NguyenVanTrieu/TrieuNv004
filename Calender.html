@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canleder</title>
+	
+</head>
+<body onload="print()">
+	<div style="width: 1000px; min-height: 600px; border: 1px dotted #aaa; margin: auto;">
+		<table id="tb1">
+			<tr><td id="td1" colspan="7"></td></tr>
+			<tr style="background-image: url('bg2.jpg');">
+				<td class="bt"><button id="bt1" onclick="actionBt(0)" style="background-image: url('bt1.jpg');"></button></td>
+				<th id="th1" colspan="5"></th>
+				<td class="bt"><button id="bt2" onclick="actionBt(2)" style="background-image: url('bt2.jpg');"></button></td></tr>
+			<tr id="tr2">
+				<td>Su</td>
+				<td>M</td>
+				<td>Tu</td>
+				<td>W</td>
+				<td>Th</td>
+				<td>F</td>
+				<td>Sa</td>
+			</tr>
+			<table id="tb2">
+				
+			</table>
+
+		</table>
+	</div>
+</body>
+
+<script type="text/javascript">
+	var listMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'Junly', 'August', 'September','October', 'November','December' ];
+	var thisTime = new Date();
+	var thisDate = thisTime.getDate();
+	var thisYear = thisTime.getFullYear();
+	var thisMonth = thisTime.getMonth();
+	var endOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	if(thisYear % 4 == 0){
+		endOfMonth[1] = 29;
+	}
+
+	var month = thisMonth;
+	function actionBt(number){ //number = 0 : back, = 1 : this, = 2 : next;
+		var date = null;
+		if (number == 0) {
+			month --;
+		}
+		if (number == 1) {
+			month = thisMonth;
+		}
+		if (number == 2) {
+			month++
+		}
+		//var firstOfMonth = (new Date(thisYear, month)).getDay();
+		print();
+	}
+
+	function creatTd(str){
+		var td = "";
+		if (month == thisMonth && thisDate == str) {
+			td = "<td id='tdDay'>" + str + "</td>";
+		}else{
+			td = "<td>" + str + "</td>";
+		}
+		return td;
+	}
+
+	function print(){
+		var tb = document.getElementById("tb2");
+		var r = "";
+
+		var d1 = new Date(thisYear, month);
+		var firstOfMonth = d1.getDay();
+
+		//print thang
+		var th = document.getElementById("th1");
+		th.innerHTML = listMonth[d1.getMonth()] + " &nbsp" + d1.getFullYear();
+
+		//print ngay
+		var j = 1;
+		r += "<tr>"
+		for (var i = 0; i < 7; i++) {
+
+			if (i < firstOfMonth) {
+				r += creatTd("..");
+			}else{
+				r += creatTd(j);
+				j++;
+			}
+		}
+		r += "</tr>";
+
+		var end = endOfMonth[d1.getMonth()];
+		while(j < end){
+			r += "<tr>";
+			for (var i = 0; i < 7; i++) {
+				if(j > end){
+					break;
+				}
+				r += creatTd(j++);
+			}
+
+			r += "</tr>";
+		}
+		tb.innerHTML = r;
+	}
+</script>
+<style type="text/css">
+		table#tb1{
+			margin: auto;
+			border: 2px solid #444;
+			margin-top: 35px;
+			border-bottom: none;
+		}
+		table#tb2{
+			margin: auto;
+			border: 2px solid #444;
+			border-top: none;
+			margin-top: 0px;
+		}
+		td , th{
+			border: 0.5px solid #bbb;
+			width: 45px;
+			height: 45px;
+			text-align: center;
+		}
+		td#td1{
+			background-size: cover;
+			background-repeat: no-repeat;
+			border: none;
+			background-image: url("bg1.jpg");
+			height: 200px;
+			box-shadow: 0 0 0 1.5px #444;
+		}
+		th#th1{
+			font-size: 30px;
+			color: #fff;
+			box-shadow: -2px 2px 5px #444;
+			border: none;		
+		}
+		tr#tr2 td{
+			font-weight: bold;
+		}
+		button{
+			height: 100%;
+			width: 100%;
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			border: none;
+		}
+		td.bt{
+			border: none;
+			box-shadow: -2px 2px 5px #444;	
+			border: none;
+		}
+		td{
+			border: none;
+		}
+		td#tdDay{
+			color: #f00;
+			background-color: #ccc;
+		}
+
+		.bt:active{
+			box-shadow: none;
+		}
+	</style>
+</html>
